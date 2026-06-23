@@ -1,0 +1,21 @@
+services:
+  backend:
+    build:
+      context: ./backend
+    ports:
+      - "8000:8000"
+    environment:
+      - QUEUE_CURE_DB_PATH=/app/queue_cure.db
+    volumes:
+      - queue_cure_data:/app
+  frontend:
+    build:
+      context: ./frontend
+    ports:
+      - "5173:5173"
+    environment:
+      - VITE_API_URL=http://localhost:8000
+    depends_on:
+      - backend
+volumes:
+  queue_cure_data:
